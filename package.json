@@ -1,0 +1,35 @@
+{
+  "name": "TidalCrossApi",
+  "version": "1.0.0",
+  "description": "Tidal Cross Api",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require test/setup.js",
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emancurmi/TidalCrossApi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emancurmi/TidalCrossApi/issues"
+  },
+  "homepage": "https://github.com/emancurmi/TidalCrossApi#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.3.1",
+    "knex": "^0.21.15",
+    "morgan": "^1.10.0",
+    "pg": "^8.5.1",
+    "winston": "^3.3.3"
+  }
+}
