@@ -3,9 +3,13 @@ const app = require('./app')
 const { ADDRESS, PORT, DB_URL } = require('./config')
 
 const db = knex({
-    client: 'pg',
-    connection: DB_URL,
-    ssl: require
+    client: 'mysql',
+    connection: {
+        host: 'localhost:3306',
+        user: 'fjntw_wp_ckdgs',
+        password: '%24Y#On_H&#3~z45',
+        database: 'wp_sq5x0'
+    }
 })
 
 app.set('db', db)
