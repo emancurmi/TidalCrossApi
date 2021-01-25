@@ -1,5 +1,5 @@
 const OrderServices = {
-    getAllUsers(knex) {
+    getAllOrders(knex) {
         return knex.select('*').from('tbl_orders')
     },
 
@@ -11,7 +11,7 @@ const OrderServices = {
         return knex.from('tbl_orders').select('*').where('userid', userid)
     },
 
-    insertUser(knex, neworder) {
+    insertOrder(knex, neworder) {
         return knex
             .insert(neworder)
             .into('tbl_orders')
@@ -21,13 +21,13 @@ const OrderServices = {
             })
     },
 
-    deleteUser(knex, orderid) {
+    deleteOrder(knex, orderid) {
         return knex('tbl_orders')
             .where('orderid', orderid)
             .delete()
     },
 
-    updateUser(knex, orderid, neworder) {
+    updateOrder(knex, orderid, neworder) {
         return knex('tbl_orders')
             .where('orderid', orderid)
             .update(neworder)

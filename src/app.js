@@ -11,6 +11,7 @@ const app = express()
 const helpRouter = require('./help/help-router')
 const exampleRouter = require('./example/example-router')
 const userRouter = require('./user/user-router')
+const orderRouter = require('./order/order-router')
 
 
 let whitelist = [
@@ -42,10 +43,11 @@ app.use(helmet())
 app.use('/api/help', helpRouter)
 app.use('/api/example', exampleRouter)
 app.use('/api/user', userRouter)
+app.use('/api/order', orderRouter)
 
 
 app.get('/', (req, res) => {
-    res.send('Yippie!! Server Online in ' + NODE_ENV + ' ' + NODE_PORT + ' mode!');
+    res.send('Yippie!! Server Online in ' + NODE_ENV + ' mode!');
 })
 
 app.use(errorHandler)

@@ -1,8 +1,6 @@
 const path = require('path')
 const express = require('express')
-const UserServices = require('./user-services')
-const { exception } = require('console')
-const { query } = require('express')
+const OrderServices = require('./order-services')
 
 const orderRouter = express.Router()
 const jsonParser = express.json()
@@ -10,7 +8,7 @@ const jsonParser = express.json()
 orderRouter
     .route('/')
     .get((req, res, next) => {
-        OrderServices.getAllUsers(req.app.get('db'))
+        OrderServices.getAllOrders(req.app.get('db'))
             .then(users => {
                 res.json(users)
             })
@@ -18,8 +16,8 @@ orderRouter
     })
 
     .post(jsonParser, (req, res, next) => {
-        const { username, useremail, userpassword } = req.body
-        const newUser = { username, useremail, userpassword }
+        const { orderuserid, orderdata, orderstatus, orderdate, orderdatecompleted } = req.body
+        const newOrder = { orderuserid, orderdata, orderstatus, orderdate, orderdatecompleted }
 
         for (const [key, value] of Object.entries(newUser)) {
             if (value == null) {
@@ -29,40 +27,26 @@ orderRouter
             }
         }
 
-        UserServices.getByUserEmailOnly(req.app.get('db'), newUser.useremail)
-            .then(user => {
-                if (user.length === 0) {
-                    UserServices.insertUser(req.app.get('db'), newUser)
-                        .then(user => {
-                            res
-                                .status(201)
-                                .location(path.posix.join(req.originalUrl + `/${user.userid}`))
-                                .json(user)
-                        })
-                        .catch(next)
-                }
-                else {
-                    return res.status(400).json({
-                        error: { message: `Phone Number is Registered` }
-                    })
-
-                }
+        OrderServices.insertOrder(req, app.get('db'), newOrder)
+            .then(order => {
+                res.status(201)
+                    .location(path.posix.join(req.originalUrl + `/${order.orderid}`))
             })
+            .catch(next)
     })
 
 orderRouter
-
-    .route('/:userid')
+    .route('/:orderid')
 
     .all((req, res, next) => {
-        UserServices.getById(req.app.get('db'), req.params.userid)
-            .then(user => {
-                if (!user) {
+        OrderServices.getById(req.app.get('db'), req.params.orderid)
+            .then(order => {
+                if (!order) {
                     return res.status(404).json({
-                        error: { message: `User doesn't exist` }
+                        error: { message: `Order doesn't exist` }
                     })
                 }
-                res.user = user
+                res.order = order
                 next()
             })
             .catch(next)
@@ -70,17 +54,19 @@ orderRouter
 
     .get((req, res, next) => {
         res.json({
-            userid: res.user.userid,
-            username: res.user.username,
-            useremail: res.user.useremail,
-            userpassword: res.user.userpassword
+            orderid: res.order.orderid,
+            orderuserid: res.order.orderuserid,
+            orderdata: res.order.orderdata,
+            orderstatus: res.order.orderstatus,
+            orderdate: res.order.orderdate,
+            orderdatecompleted: res.order.datecompleted
         })
     })
 
     .delete((req, res, next) => {
-        UserServices.deleteUser(
+        OrderServices.deleteOrder(
             req.app.get('db'),
-            req.params.userid
+            req.params.orderid
         )
             .then(() => {
                 res.status(204).end()
@@ -90,9 +76,9 @@ orderRouter
 
     .patch(jsonParser, (req, res, next) => {
         //console.log(req.body)
-        const { username, useremail, userpassword } = req.body
-        const userToUpdate = { username, useremail, userpassword }
-        const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
+        const { orderstatus, orderdatecompleted } = req.body
+        const orderToUpdate = { orderstatus, orderdatecompleted }
+        const numberOfValues = Object.values(orderToUpdate).filter(Boolean).length
         if (numberOfValues === 0) {
             return res.status(400).json({
                 error: {
@@ -100,24 +86,12 @@ orderRouter
                 }
             })
         }
-        if (req.params.userid != 1) {
-            UserServices.updateUser(
-                req.app.get('db'),
-                req.params.userid,
-                userToUpdate
-            )
-                .then(numRowsAffected => {
-                    res.status(200).json({})
-                })
-                .catch(next)
-        }
-        else {
-            return res.status(400).json({
-                error: {
-                    message: "User is a Demo User"
-                }
+
+        OrderServices.updateOrder(req.app.get('db'), req.params.orderid, orderToUpdate)
+            .then(numRowsAffected => {
+                res.status(200).json({})
             })
-        }
+            .catch(next)
     })
 
-module.exports = userRouter
+module.exports = orderRouter
