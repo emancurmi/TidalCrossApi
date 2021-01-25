@@ -4,19 +4,20 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
-const validateBearerToken = require('./validate-bearer-token')
+//const validateBearerToken = require('./validate-bearer-token')
 const errorHandler = require('./error-handler')
 const app = express()
 
 const helpRouter = require('./help/help-router')
 const exampleRouter = require('./example/example-router')
+const userRouter = require('./user/user-router')
 
 
 let whitelist = [
     'http://localhost:8000',
     'http://localhost:3000',
-    'https://online-app.vercel.app',
-    'https://online-api.herokuapp.com/']
+    'https://tidalcrossapp.vercel.app/',
+    'https://tidalcrossapi.herokuapp.com/']
 
 app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
     skip: () => NODE_ENV === 'test'
@@ -36,10 +37,11 @@ app.use(cors({
 }));
 
 app.use(helmet())
-app.use(validateBearerToken)
+//app.use(validateBearerToken)
 
 app.use('/api/help', helpRouter)
 app.use('/api/example', exampleRouter)
+app.use('/api/user', userRouter)
 
 app.get('/', (req, res) => {
     res.send('Yippie!! Server Online in ' + NODE_ENV + ' mode!');
