@@ -1,6 +1,6 @@
 const knex = require('knex')
 const app = require('./app')
-const { ADDRESS, PORT, DB_URL } = require('./config')
+const { ADDRESS, PORT } = require('./config')
 
 const db = knex({
     client: 'mysql',
