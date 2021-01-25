@@ -1,8 +1,6 @@
 const path = require('path')
 const express = require('express')
 const UserServices = require('./user-services')
-const { exception } = require('console')
-const { query } = require('express')
 
 const userRouter = express.Router()
 const jsonParser = express.json()
