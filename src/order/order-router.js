@@ -10,26 +10,11 @@ const jsonParser = express.json()
 orderRouter
     .route('/')
     .get((req, res, next) => {
-
-        if (quseremail != "") {
-            if (quserpassword != "") {
-                UserServices.useremail(req.app.get('db'), quseremail, quserpassword)
-                    .then(users => {
-                        res.json(users)
-                    })
-                    .catch(next)
-            }
-            else {
-                throw Error("Pin is rquired");
-            }
-        }
-        else {
-            UserServices.getAllUsers(req.app.get('db'))
-                .then(users => {
-                    res.json(users)
-                })
-                .catch(next)
-        }
+        OrderServices.getAllUsers(req.app.get('db'))
+            .then(users => {
+                res.json(users)
+            })
+            .catch(next)
     })
 
     .post(jsonParser, (req, res, next) => {

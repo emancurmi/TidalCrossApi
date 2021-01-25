@@ -45,7 +45,7 @@ app.use('/api/user', userRouter)
 
 
 app.get('/', (req, res) => {
-    res.send('Yippie!! Server Online in ' + NODE_ENV + ' mode!');
+    res.send('Yippie!! Server Online in ' + NODE_ENV + ' ' + NODE_PORT + ' mode!');
 })
 
 app.use(errorHandler)

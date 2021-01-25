@@ -13,25 +13,11 @@ userRouter
         //var quseremail = req.query.useremail || "";
         //var quserpassword = req.query.userpassword || "";
 
-        //if (quseremail != "") {
-        //    if (quserpassword != "") {
-        //        UserServices.useremail(req.app.get('db'), quseremail, quserpassword)
-        //            .then(users => {
-        //                res.json(users)
-        //            })
-        //            .catch(next)
-        //    }
-        //    else {
-        //        throw Error("Pin is rquired");
-        //    }
-        //}
-        //else {
-            UserServices.getAllUsers(req.app.get('db'))
-                .then(users => {
-                    res.json(users)
-                })
-                .catch(next)
-        //}
+        UserServices.getAllUsers(req.app.get('db'))
+            .then(users => {
+                res.json(users)
+            })
+            .catch(next)
     })
 
     .post(jsonParser, (req, res, next) => {
