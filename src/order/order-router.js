@@ -4,34 +4,32 @@ const UserServices = require('./user-services')
 const { exception } = require('console')
 const { query } = require('express')
 
-const userRouter = express.Router()
+const orderRouter = express.Router()
 const jsonParser = express.json()
 
-userRouter
+orderRouter
     .route('/')
     .get((req, res, next) => {
-        //var quseremail = req.query.useremail || "";
-        //var quserpassword = req.query.userpassword || "";
 
-        //if (quseremail != "") {
-        //    if (quserpassword != "") {
-        //        UserServices.useremail(req.app.get('db'), quseremail, quserpassword)
-        //            .then(users => {
-        //                res.json(users)
-        //            })
-        //            .catch(next)
-        //    }
-        //    else {
-        //        throw Error("Pin is rquired");
-        //    }
-        //}
-        //else {
+        if (quseremail != "") {
+            if (quserpassword != "") {
+                UserServices.useremail(req.app.get('db'), quseremail, quserpassword)
+                    .then(users => {
+                        res.json(users)
+                    })
+                    .catch(next)
+            }
+            else {
+                throw Error("Pin is rquired");
+            }
+        }
+        else {
             UserServices.getAllUsers(req.app.get('db'))
                 .then(users => {
                     res.json(users)
                 })
                 .catch(next)
-        //}
+        }
     })
 
     .post(jsonParser, (req, res, next) => {
@@ -67,7 +65,7 @@ userRouter
             })
     })
 
-userRouter
+orderRouter
 
     .route('/:userid')
 
