@@ -11,12 +11,11 @@ userRouter
     .route('/')
     .get((req, res, next) => {
         var quseremail = req.query.useremail || "";
-        var quserphone = req.query.userphone || "";
         var quserpassword = req.query.userpassword || "";
 
-        if (quserphone != "" || quseremail != "") {
+        if (quseremail != "") {
             if (quserpassword != "") {
-                UserServices.getByUserPhone(req.app.get('db'), quserphone, quserpassword)
+                UserServices.useremail(req.app.get('db'), quseremail, quserpassword)
                     .then(users => {
                         res.json(users)
                     })
@@ -36,8 +35,8 @@ userRouter
     })
 
     .post(jsonParser, (req, res, next) => {
-        const { username, userphone, useremail, userpassword } = req.body
-        const newUser = { username, userphone, useremail, userpassword }
+        const { username, useremail, userpassword } = req.body
+        const newUser = { username, useremail, userpassword }
 
         for (const [key, value] of Object.entries(newUser)) {
             if (value == null) {
@@ -47,27 +46,25 @@ userRouter
             }
         }
 
-       
-                    UserServices.getByUserEmailOnly(req.app.get('db'), newUser.useremail)
+        UserServices.getByUserEmailOnly(req.app.get('db'), newUser.useremail)
+            .then(user => {
+                if (user.length === 0) {
+                    UserServices.insertUser(req.app.get('db'), newUser)
                         .then(user => {
-                            if (user.length === 0) {
-                                UserServices.insertUser(req.app.get('db'), newUser)
-                                    .then(user => {
-                                        res
-                                            .status(201)
-                                            .location(path.posix.join(req.originalUrl + `/${user.userid}`))
-                                            .json(user)
-                                    })
-                                    .catch(next)
-                            }
-                            else {
-                                return res.status(400).json({
-                                    error: { message: `User is Registered` }
-                                })
-                            }
+                            res
+                                .status(201)
+                                .location(path.posix.join(req.originalUrl + `/${user.userid}`))
+                                .json(user)
                         })
                         .catch(next)
-                
+                }
+                else {
+                    return res.status(400).json({
+                        error: { message: `Phone Number is Registered` }
+                    })
+
+                }
+            })
     })
 
 userRouter
@@ -92,7 +89,6 @@ userRouter
         res.json({
             userid: res.user.userid,
             username: res.user.username,
-            userphone: res.user.userphone,
             useremail: res.user.useremail,
             userpassword: res.user.userpassword
         })
@@ -111,8 +107,8 @@ userRouter
 
     .patch(jsonParser, (req, res, next) => {
         //console.log(req.body)
-        const { username, userphone, userpassword } = req.body
-        const userToUpdate = { username, userphone, userpassword }
+        const { username, useremail, userpassword } = req.body
+        const userToUpdate = { username, useremail, userpassword }
         const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
         if (numberOfValues === 0) {
             return res.status(400).json({

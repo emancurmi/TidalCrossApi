@@ -7,16 +7,8 @@ const UserServices = {
         return knex.from('tbl_users').select('*').where('userid', userid).first()
     },
 
-    getByUserPhone(knex, userphone, userpassword) {
-        return knex.from('tbl_users').select('*').where('userphone', userphone).where('userpassword', userpassword)
-    },
-
     getByUserEmail(knex, useremail, userpassword) {
         return knex.from('tbl_users').select('*').where('useremail', useremail).where('userpassword', userpassword)
-    },
-
-    getByUserPhoneOnly(knex, userphone) {
-        return knex.from('tbl_users').select('*').where('userphone', userphone)
     },
 
     getByUserEmailOnly(knex, useremail) {
