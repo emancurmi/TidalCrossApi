@@ -1,5 +1,5 @@
 module.exports = {
-    ADDRESS: process.env.ADDRESS || 'https://tidalcrossapi.herokuapp.com/',
+    ADDRESS: process.env.ADDRESS || 'http://tidalcross.com/',
     PORT: process.env.PORT || 8137,
     NODE_ENV: process.env.NODE_ENV || 'production',
     API_TOKEN: process.env.API_TOKEN || '7b967bbe-afc2-11ea-b3de-0242ac130004',
