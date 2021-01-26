@@ -3,7 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
-const { NODE_ENV } = require('./config')
+const { ADDRESS, PORT, NODE_ENV } = require('./config')
 //const validateBearerToken = require('./validate-bearer-token')
 const errorHandler = require('./error-handler')
 const app = express()
@@ -47,7 +47,7 @@ app.use('/api/order', orderRouter)
 
 
 app.get('/', (req, res) => {
-    res.send('Yippie!! Server Online in ' + NODE_ENV + ' mode!');
+    res.send('Yippie!! Server Online in ' + NODE_ENV + ' mode! At ' + ADDRESS + ':' + PORT);
 })
 
 app.use(errorHandler)
