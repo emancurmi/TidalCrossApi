@@ -7,15 +7,24 @@ const jsonParser = express.json()
 
 userRouter
     .route('/')
-    .get((req, res, next) => {
-        //var quseremail = req.query.useremail || "";
-        //var quserpassword = req.query.userpassword || "";
 
-        UserServices.getAllUsers(req.app.get('db'))
-            .then(users => {
-                res.json(users)
-            })
-            .catch(next)
+    .get((req, res, next) => {
+        var quseremail = req.query.useremail || "";
+
+        if (quseremail != "") {
+            UserServices.getByUserEmail(req.app.get('db'), quseremail)
+                    .then(users => {
+                        res.json(users)
+                    })
+                    .catch(next)
+        }
+        else {
+            UserServices.getAllUsers(req.app.get('db'))
+                .then(users => {
+                    res.json(users)
+                })
+                .catch(next)
+        }
     })
 
     .post(jsonParser, (req, res, next) => {
@@ -74,7 +83,8 @@ userRouter
             userid: res.user.userid,
             username: res.user.username,
             useremail: res.user.useremail,
-            userpassword: res.user.userpassword
+            userpassword: res.user.userpassword,
+            userrole: res.user.userrole
         })
     })
 
