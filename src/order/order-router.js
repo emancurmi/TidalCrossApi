@@ -19,7 +19,7 @@ orderRouter
         const { ordershopid, orderuserid, orderdata, orderstatus, orderdate, orderdatecompleted } = req.body
         const newOrder = { ordershopid, orderuserid, orderdata, orderstatus, orderdate, orderdatecompleted }
 
-        for (const [key, value] of Object.entries(newUser)) {
+        for (const [key, value] of Object.entries(newOrder)) {
             if (value == null) {
                 return res.status(400).json({
                     error: { message: `Missing '${key}' in request body` }
