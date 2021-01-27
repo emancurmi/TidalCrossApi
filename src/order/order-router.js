@@ -29,8 +29,10 @@ orderRouter
 
         OrderServices.insertOrder(req, app.get('db'), newOrder)
             .then(order => {
-                res.status(201)
+                res
+                    .status(201)
                     .location(path.posix.join(req.originalUrl + `/${order.orderid}`))
+                    .json(order)
             })
             .catch(next)
     })
