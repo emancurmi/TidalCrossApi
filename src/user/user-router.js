@@ -36,8 +36,8 @@ userRouter
     })
 
     .post(jsonParser, (req, res, next) => {
-        const { username, useremail, userpassword } = req.body
-        const newUser = { username, useremail, userpassword }
+        const { username, useremail, userpassword, userrole } = req.body
+        const newUser = { username, useremail, userpassword, userrole }
 
         for (const [key, value] of Object.entries(newUser)) {
             if (value == null) {
@@ -61,7 +61,7 @@ userRouter
                 }
                 else {
                     return res.status(400).json({
-                        error: { message: `Phone Number is Registered` }
+                        error: { message: `Email is Registered` }
                     })
 
                 }
