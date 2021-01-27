@@ -19,13 +19,14 @@ orderRouter
         const { ordershopid, orderuserid, orderdata, orderstatus, orderdate, orderdatecompleted } = req.body
         const newOrder = { ordershopid, orderuserid, orderdata, orderstatus, orderdate, orderdatecompleted }
         console.log(req.body);
-        //for (const [key, value] of Object.entries(newOrder)) {
-        //    if (value == null) {
-        //        return res.status(400).json({
-        //            error: { message: `Missing '${key}' in request body` }
-        //        })
-        //    }
-        //}
+        console.log(newOrder);
+        for (const [key, value] of Object.entries(newOrder)) {
+            if (value == null) {
+                return res.status(400).json({
+                    error: { message: `Missing '${key}' in request body` }
+                })
+            }
+        }
 
         OrderServices.insertOrder(req, app.get('db'), newOrder)
             .then(order => {
