@@ -3,12 +3,16 @@ const OrderServices = {
         return knex.select('*').from('tbl_orders')
     },
 
-    getById(knex, orderid) {
+    getOrdersById(knex, orderid) {
         return knex.from('tbl_orders').select('*').where('orderid', orderid).first()
     },
 
-    getByUserId(knex, userid) {
-        return knex.from('tbl_orders').select('*').where('userid', userid)
+    getOrdersbyUser(knex, userid) {
+        return knex.from('tbl_orders').select('*').where('orderuserid', userid)
+    },
+
+    getOrdersbyShop(knex, userid) {
+        return knex.from('tbl_orders').select('*').where('ordershopid', userid)
     },
 
     insertOrder(knex, neworder) {

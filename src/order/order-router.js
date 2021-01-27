@@ -8,16 +8,36 @@ const jsonParser = express.json()
 orderRouter
     .route('/')
     .get((req, res, next) => {
+        var quserid = req.query.userid || "";
+        var qshopid = req.query.shopid || "";
+
+        if (quserid != "") {
+            OrderServices.getOrdersbyUser(req.app.get('db'), quserid)
+                .then(orders => {
+                    res.json(orders)
+                })
+                .catch(next)
+        }
+
+        if (qshopid != "") {
+            OrderServices.getOrdersbyShop(req.app.get('db'), qshopid)
+                .then(orders => {
+                    res.json(orders)
+                })
+                .catch(next)
+        }
+
+
         OrderServices.getAllOrders(req.app.get('db'))
-            .then(users => {
-                res.json(users)
+            .then(orders => {
+                res.json(orders)
             })
             .catch(next)
     })
 
     .post(jsonParser, (req, res, next) => {
-        const { ordershopid, orderuserid, orderdata, orderstatus, orderdate, orderdatecompleted } = req.body
-        const newOrder = { ordershopid, orderuserid, orderdata, orderstatus, orderdate, orderdatecompleted }
+        const { ordershopid, orderuserid, orderdata, orderstatus, orderdate } = req.body
+        const newOrder = { ordershopid, orderuserid, orderdata, orderstatus, orderdate  }
         console.log(req.body);
         console.log(newOrder);
         for (const [key, value] of Object.entries(newOrder)) {
@@ -28,7 +48,7 @@ orderRouter
             }
         }
 
-        OrderServices.insertOrder(req, app.get('db'), newOrder)
+        OrderServices.insertOrder(req.app.get('db'), newOrder)
             .then(order => {
                 res
                     .status(201)
@@ -42,7 +62,7 @@ orderRouter
     .route('/:orderid')
 
     .all((req, res, next) => {
-        OrderServices.getById(req.app.get('db'), req.params.orderid)
+        OrderServices.getOrdersById(req.app.get('db'), req.params.orderid)
             .then(order => {
                 if (!order) {
                     return res.status(404).json({

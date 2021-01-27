@@ -36,8 +36,8 @@ userRouter
     })
 
     .post(jsonParser, (req, res, next) => {
-        const { username, useremail, userpassword, userrole } = req.body
-        const newUser = { username, useremail, userpassword, userrole }
+        const { username, useremail, userphone, userpassword, userrole } = req.body
+        const newUser = { username, useremail, userphone, userpassword, userrole }
 
         for (const [key, value] of Object.entries(newUser)) {
             if (value == null) {
@@ -91,6 +91,7 @@ userRouter
             userid: res.user.userid,
             username: res.user.username,
             useremail: res.user.useremail,
+            userphone: res.user.userphone,
             userpassword: res.user.userpassword,
             userrole: res.user.userrole
         })
@@ -109,8 +110,8 @@ userRouter
 
     .patch(jsonParser, (req, res, next) => {
         //console.log(req.body)
-        const { username, useremail, userpassword } = req.body
-        const userToUpdate = { username, useremail, userpassword }
+        const { username, useremail, userphone, userpassword } = req.body
+        const userToUpdate = { username, useremail, userphone, userpassword }
         const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
         if (numberOfValues === 0) {
             return res.status(400).json({
