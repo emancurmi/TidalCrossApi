@@ -16,8 +16,8 @@ orderRouter
     })
 
     .post(jsonParser, (req, res, next) => {
-        const { ordershopid, orderuserid, orderdata, orderstatus, orderdate, orderdatecompleted } = req.body
-        const newOrder = { ordershopid, orderuserid, orderdata, orderstatus, orderdate, orderdatecompleted }
+        const { ordershopid, orderuserid, orderdata, orderstatus, orderdate } = req.body
+        const newOrder = { ordershopid, orderuserid, orderdata, orderstatus, orderdate }
 
         for (const [key, value] of Object.entries(newOrder)) {
             if (value == null) {
