@@ -10,6 +10,7 @@ userRouter
 
     .get((req, res, next) => {
         var quseremail = req.query.useremail || "";
+        var quserrole = req.query.userrole || "";
 
         if (quseremail != "") {
             UserServices.getByUserEmail(req.app.get('db'), quseremail)
@@ -17,6 +18,13 @@ userRouter
                         res.json(users)
                     })
                     .catch(next)
+        }
+        if (quserrole != "") {
+            UserServices.getByUserRole(req.app.get('db'), quserrole)
+                .then(users => {
+                    res.json(users)
+                })
+                .catch(next)
         }
         else {
             UserServices.getAllUsers(req.app.get('db'))

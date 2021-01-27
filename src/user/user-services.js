@@ -11,6 +11,10 @@ const UserServices = {
         return knex.from('tbl_users').select('*').where('useremail', useremail)
     },
 
+    getByUserRole(knex, userrole) {
+        return knex.from('tbl_users').select('*').where('userrole', userrole)
+    },
+
     getByUserEmailOnly(knex, useremail) {
         return knex.from('tbl_users').select('*').where('useremail', useremail)
     },
