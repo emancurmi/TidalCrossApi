@@ -17,8 +17,8 @@ const orderRouter = require('./order/order-router')
 let whitelist = [
     'http://localhost:8000',
     'http://localhost:3000',
-    'https://tidalcrossapp.vercel.app/',
-    'https://tidalcrossapi.herokuapp.com/']
+    'https://tidalcrossapp.vercel.app',
+    'https://tidalcrossapi.herokuapp.com']
 
 app.use(morgan((NODE_ENV === 'production') ? 'tiny' : 'common', {
     skip: () => NODE_ENV === 'test'
