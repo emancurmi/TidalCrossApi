@@ -42,7 +42,7 @@ userRouter
 
         const { username, useremail, userphone, userpassword, userrole } = req.body
 
-        let userhexpassword = crypto.createHash('sha1').update(userpassword + userhex).digest('hex');
+        let userhexpassword = crypto.createHash('sha1').update(userpassword + '6Em3brlzepetr5sw6z2y' + userhex).digest('hex');
 
         const newUser = { username, useremail, userphone, userhexpassword, userrole, userhex }
 
@@ -120,7 +120,7 @@ userRouter
         //console.log(req.body)
         const { username, useremail, userphone, userpassword, userhex } = req.body
 
-        let userhexpassword = crypto.createHash('sha1').update(userpassword + userhex).digest('hex');
+        let userhexpassword = crypto.createHash('sha1').update(userpassword + '6Em3brlzepetr5sw6z2y' + userhex).digest('hex');
 
         const userToUpdate = { username, useremail, userphone, userhexpassword, userhex }
         const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
