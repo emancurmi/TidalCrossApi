@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
 const UserServices = require('./user-services')
-
+const crypto = require('crypto')
 const userRouter = express.Router()
 const jsonParser = express.json()
 
@@ -36,8 +36,15 @@ userRouter
     })
 
     .post(jsonParser, (req, res, next) => {
+        let current_date = (new Date()).valueOf().toString();
+        let random = Math.random().toString();
+        let userhex  = crypto.createHash('sha1').update(current_date + random).digest('hex');
+
         const { username, useremail, userphone, userpassword, userrole } = req.body
-        const newUser = { username, useremail, userphone, userpassword, userrole }
+
+        let userhexpassword = crypto.createHash('sha1').update(userpassword + userhex).digest('hex');
+
+        const newUser = { username, useremail, userphone, userhexpassword, userrole, userhex }
 
         for (const [key, value] of Object.entries(newUser)) {
             if (value == null) {
@@ -92,8 +99,9 @@ userRouter
             username: res.user.username,
             useremail: res.user.useremail,
             userphone: res.user.userphone,
-            userpassword: res.user.userpassword,
-            userrole: res.user.userrole
+            userhexpassword: res.user.userhexpassword,
+            userrole: res.user.userrole,
+            userhex: res.user.userhex,
         })
     })
 
@@ -110,8 +118,11 @@ userRouter
 
     .patch(jsonParser, (req, res, next) => {
         //console.log(req.body)
-        const { username, useremail, userphone, userpassword } = req.body
-        const userToUpdate = { username, useremail, userphone, userpassword }
+        const { username, useremail, userphone, userpassword, userhex } = req.body
+
+        let userhexpassword = crypto.createHash('sha1').update(userpassword + userhex).digest('hex');
+
+        const userToUpdate = { username, useremail, userphone, userhexpassword, userhex }
         const numberOfValues = Object.values(userToUpdate).filter(Boolean).length
         if (numberOfValues === 0) {
             return res.status(400).json({
