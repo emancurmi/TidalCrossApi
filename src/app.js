@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const { ADDRESS, PORT, NODE_ENV } = require('./config')
-const validateBearerToken = require('./validate-bearer-token')
+//const validateBearerToken = require('./validate-bearer-token')
 const errorHandler = require('./error-handler')
 const app = express()
 
@@ -38,7 +38,7 @@ app.use(cors({
 }));
 
 app.use(helmet())
-app.use(validateBearerToken)
+//app.use(validateBearerToken)
 
 app.use('/api/help', helpRouter)
 app.use('/api/example', exampleRouter)
