@@ -100,7 +100,10 @@ orderRouter
 
     .patch(jsonParser, (req, res, next) => {
         //console.log(req.body)
-        const { orderstatus, orderdatecompleted } = req.body
+        var dt = new Date();
+        var orderdatecompleted = dt.toUTCString();
+
+        const { orderstatus } = req.body
         const orderToUpdate = { orderstatus, orderdatecompleted }
         const numberOfValues = Object.values(orderToUpdate).filter(Boolean).length
         if (numberOfValues === 0) {
