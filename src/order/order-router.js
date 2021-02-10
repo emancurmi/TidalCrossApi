@@ -36,7 +36,12 @@ orderRouter
     })
 
     .post(jsonParser, (req, res, next) => {
-        const { ordershopid, orderuserid, orderdata, orderstatus, orderdate } = req.body
+
+        var dt = new Date();
+        var orderdate = dt.toUTCString();
+
+        const { ordershopid, orderuserid, orderdata, orderstatus } = req.body
+
         const newOrder = { ordershopid, orderuserid, orderdata, orderstatus, orderdate  }
         console.log(req.body);
         console.log(newOrder);
