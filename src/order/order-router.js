@@ -39,8 +39,9 @@ orderRouter
 
         var dt = new Date();
         var orderdate = dt.toUTCString();
+        var orderstatus = "Pending";
 
-        const { ordershopid, orderuserid, orderdata, orderstatus } = req.body
+        const { ordershopid, orderuserid, orderdata } = req.body
 
         const newOrder = { ordershopid, orderuserid, orderdata, orderstatus, orderdate  }
         console.log(req.body);
