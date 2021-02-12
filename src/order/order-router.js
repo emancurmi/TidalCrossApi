@@ -37,8 +37,7 @@ orderRouter
 
     .post(jsonParser, (req, res, next) => {
 
-        var dt = new Date();
-        var orderdate = dt.toUTCString();
+        var orderdate = Date.now();
         var orderstatus = "Pending";
 
         const { ordershopid, orderuserid, orderdata } = req.body
@@ -105,9 +104,7 @@ orderRouter
     })
 
     .patch(jsonParser, (req, res, next) => {
-        //console.log(req.body)
-        var dt = new Date();
-        var orderdatecompleted = dt.toUTCString();
+        var orderdatecompleted = Date.now;
 
         const { orderstatus } = req.body
         const orderToUpdate = { orderstatus, orderdatecompleted }
