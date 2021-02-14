@@ -104,7 +104,7 @@ orderRouter
     })
 
     .patch(jsonParser, (req, res, next) => {
-        var orderdatecompleted = Date.now;
+        var orderdatecompleted = Date.now();
 
         const { orderstatus } = req.body
         const orderToUpdate = { orderstatus, orderdatecompleted }
