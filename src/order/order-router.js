@@ -19,7 +19,7 @@ orderRouter
                 .catch(next)
         }
 
-        if (qshopid != "") {
+        else if (qshopid != "") {
             OrderServices.getOrdersbyShop(req.app.get('db'), qshopid)
                 .then(orders => {
                     res.json(orders)
@@ -28,11 +28,13 @@ orderRouter
         }
 
 
-        OrderServices.getAllOrders(req.app.get('db'))
+        else {
+            OrderServices.getAllOrders(req.app.get('db'))
             .then(orders => {
                 res.json(orders)
             })
             .catch(next)
+        }
     })
 
     .post(jsonParser, (req, res, next) => {
