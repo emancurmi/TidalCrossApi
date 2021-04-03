@@ -49,8 +49,7 @@ app.use('/api/order', orderRouter)
 
 
 app.get('/', (req, res) => {
-    res.send('Yippie!! Server Online in ' + NODE_ENV + ' mode! At ' + ADDRESS + ':' + PORT);
-    res.send(DATABASE_URL)
+    res.send('Yippie!! Server Online in ' + NODE_ENV + ' mode! At ' + ADDRESS + ':' + PORT + ' and database connection ' + DATABASE_URL);
 
 })
 
