@@ -3,7 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
-const { ADDRESS, PORT, NODE_ENV } = require('./config')
+const { ADDRESS, PORT, NODE_ENV, DATABASE_URL } = require('./config')
 //const validateBearerToken = require('./validate-bearer-token')
 const errorHandler = require('./error-handler')
 const app = express()
@@ -12,6 +12,7 @@ const helpRouter = require('./help/help-router')
 const exampleRouter = require('./example/example-router')
 const userRouter = require('./user/user-router')
 const orderRouter = require('./order/order-router')
+const { data } = require('./logger')
 
 
 let whitelist = [
@@ -49,6 +50,8 @@ app.use('/api/order', orderRouter)
 
 app.get('/', (req, res) => {
     res.send('Yippie!! Server Online in ' + NODE_ENV + ' mode! At ' + ADDRESS + ':' + PORT);
+    res.send(DATABASE_URL)
+
 })
 
 app.use(errorHandler)
