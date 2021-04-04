@@ -12,6 +12,8 @@ const helpRouter = require('./help/help-router')
 const exampleRouter = require('./example/example-router')
 const userRouter = require('./user/user-router')
 const orderRouter = require('./order/order-router')
+const onlineRouter = require('./online/online-router')
+
 const { data } = require('./logger')
 
 
@@ -48,10 +50,10 @@ app.use('/api/example', exampleRouter)
 app.use('/api/user', userRouter)
 app.use('/api/order', orderRouter)
 
+app.use('/api/online', onlineRouter)
 
 app.get('/', (req, res) => {
     res.send('Yippie!! Server Online in ' + NODE_ENV + ' mode! At ' + ADDRESS + ':' + PORT + ' and database connection ' + DATABASE_URL);
-
 })
 
 app.use(errorHandler)
