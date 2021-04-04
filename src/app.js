@@ -18,6 +18,7 @@ const { data } = require('./logger')
 let whitelist = [
     'http://localhost:8000',
     'http://localhost:3000',
+    'https://www.tidalcross.com',
     'https://tidalcross.com',
     'https://tidalcrossapp.vercel.app',
     'https://tidalcrossapi.herokuapp.com']
