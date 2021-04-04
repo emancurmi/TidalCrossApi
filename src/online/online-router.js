@@ -8,9 +8,9 @@ onlineRouter
 
     .get((req, res, next) => {
         OnlineServices.getConnection(req.app.get('db'))
-            .then(
-                res.json("connection found")
-            )
+            .then(users => {
+                res.json(users)
+            })
             .catch(next)
     })
 
