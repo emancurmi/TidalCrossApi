@@ -1,6 +1,6 @@
 const knex = require('knex')
 const app = require('./app')
-const { ADDRESS, PORT, DATABASE_URL } = require('./config')
+const { ADDRESS, PORT, DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } = require('./config')
 
 const db = knex({
    //client: 'pg',
